@@ -69,8 +69,8 @@ const clearPicture = () => {
   pictureCaption.textContent = '';
   pictureLikes.textContent = '';
   pictureCommentsCount.textContent = '';
-  socialCommentsList.innerHTML = '';
   commentInput.value = '';
+  socialCommentsList.innerHTML = '';
 
   showElement(showCommentsBtn);
 };
@@ -79,9 +79,11 @@ showCommentsBtn.addEventListener('click', onButtonClickShowComments);
 
 submitCommentBtn.addEventListener('click', (evt) => {
 
-  createNewComment(evt);
-  getCommentsCaption(evt);
-  updateCommentsCouter(evt);
+  if (commentInput.value !== '') {
+    createNewComment(evt);
+    getCommentsCaption(evt);
+    updateCommentsCouter(evt);
+  }
 });
 
 export {

@@ -1,13 +1,16 @@
 import './variables.js';
 import './modal.js';
-import { onPopupEscKeydown, changeGenerals, body } from './modal.js';
+import { onPopupEscKeydown,
+  changeGenerals,
+  body } from './modal.js';
 import { uploadForm } from './variables.js';
 
 const successAlertTemplate = document.querySelector('#success').content.querySelector('.success');
 const errorAlertTemplate = document.querySelector('#error').content.querySelector('.error');
-
 const successAlert = successAlertTemplate.cloneNode(true);
 const errorAlert = errorAlertTemplate.cloneNode(true);
+const successAlertInner = successAlert.querySelector('.success__inner');
+const errorAlertInner = errorAlert.querySelector('.success__inner');
 
 /* Render success alert */
 
@@ -21,6 +24,15 @@ const renderSuccessAlert = () => {
   document.addEventListener('keydown', onPopupEscKeydowAlert);
 
   changeGenerals();
+
+  successAlert.addEventListener('click', (g) => {
+
+    const withinBoundaries = g.composedPath().includes(successAlertInner);
+
+    if (!withinBoundaries) {
+      closeAllert();
+    }
+  });
 };
 
 /* Render error alert */
@@ -34,6 +46,41 @@ const renderErrorAlert = () => {
 
   document.removeEventListener('keydown', onPopupEscKeydown);
   document.addEventListener('keydown', onPopupEscKeydowAlert);
+
+  errorAlert.addEventListener('click', (g) => {
+
+    const withinBoundaries = g.composedPath().includes(errorAlertInner);
+
+    if (!withinBoundaries) {
+      closeAllert();
+    }
+  });
+};
+
+const renderErrorAlertGallery = () => {
+
+  uploadForm.append(errorAlert);
+
+  const errorTitle = document.querySelector('.error__title');
+  const errorButton = document.querySelector('.error__button');
+
+  errorTitle.textContent = 'Не удалось загрузить галерею';
+  errorButton.addEventListener('click', () => {
+    closeAllert();
+    window.location.reload();
+  });
+
+  document.removeEventListener('keydown', onPopupEscKeydown);
+  document.addEventListener('keydown', onPopupEscKeydowAlert);
+
+  errorAlert.addEventListener('click', (g) => {
+
+    const withinBoundaries = g.composedPath().includes(errorAlertInner);
+
+    if (!withinBoundaries) {
+      closeAllert();
+    }
+  });
 };
 
 /* Close alert */
@@ -67,5 +114,7 @@ function closeAllert () {
 export {
   renderSuccessAlert,
   renderErrorAlert,
-  successAlert
+  renderErrorAlertGallery,
+  successAlert,
+  errorAlert
 };

@@ -1,6 +1,7 @@
 import './alerts.js';
 import './gallery.js';
 import { renderGallery } from './gallery.js';
+import { renderErrorAlertGallery } from './alerts.js';
 
 const filters = document.querySelector('.img-filters');
 let defaultList = [];
@@ -9,16 +10,24 @@ const SEND_DATA_LINK = 'https://27.javascript.pages.academy/kekstagram';
 
 /* Get data from the server */
 
-const getData = () => {
+const getData = (onSuccess, onFail) => {
   fetch(GET_DATA_LINK)
-    .then((response) => response.json())
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      }
+      throw onFail();
+    })
     .then((pictures) => {
-      renderGallery(pictures);
+      onSuccess(pictures);
       defaultList = Array.from(pictures);
+    })
+    .catch(() => {
+      onFail();
     });
 };
 
-getData();
+getData(renderGallery, renderErrorAlertGallery);
 
 filters.classList.remove('img-filters--inactive');
 

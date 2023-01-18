@@ -9,7 +9,9 @@ import { resetEffects } from './effects.js';
 import { resetScale } from './scale.js';
 import { sendData } from './api.js';
 import { uploadForm } from './variables.js';
-import { pristine } from './validation.js';
+import { pristine,
+  hashTagsField
+} from './validation.js';
 import { closeFormModal } from './modal.js';
 import {
   renderSuccessAlert,
@@ -18,7 +20,6 @@ import {
 
 const submitButton = uploadForm.querySelector('.img-upload__submit');
 const textDescription = uploadForm.querySelector('.text__description');
-const hashTagsField = uploadForm.querySelector('.text__hashtags');
 
 /* Block form-submit button */
 
@@ -81,10 +82,10 @@ const clearForm = () => {
 setFormSubmit(closeFormModal);
 
 textDescription.addEventListener('input', blockButtonOnFieldInput);
+hashTagsField.addEventListener('input', blockButtonOnFieldInput);
 
 export {
   setFormSubmit,
   clearForm,
-  textDescription,
-  hashTagsField
+  textDescription
 };

@@ -8,12 +8,12 @@ import {
   hideElement } from './utils.js';
 
 const socialCommentsList = document.querySelector('.social__comments');
-const commentTemplate = document.querySelector('.social__comment');
 const showCommentsBtn = document.querySelector('.social__comments-loader');
-
 const socialFooter = document.querySelector('.social__footer');
 const socialPicture = socialFooter.querySelector('.social__picture');
 const commentInput = socialFooter.querySelector('.social__footer-text');
+
+const commentTemplate = document.querySelector('#comment').content;
 
 const COMMENTS_SHOWN = 5;
 const ONE = 1;
@@ -35,8 +35,6 @@ const renderComments = (evt) => {
 
   const link = evt.target.closest('.picture');
   const socialComments = defaultList[link.id].comments;
-
-  socialCommentsList.innerHTML = '';
 
   if (defaultList[link.id].comments.length > 0) {
 
@@ -142,6 +140,8 @@ const createNewComment = (evt) => {
 
   updateComments();
 };
+
+/* Block submit comment button */
 
 export {
   renderComments,

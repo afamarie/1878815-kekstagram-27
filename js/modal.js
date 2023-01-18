@@ -4,6 +4,8 @@ import './user-picture.js';
 import './big-picture.js';
 import './gallery.js';
 import './alerts.js';
+import './validation.js';
+import { hashTagsField } from './validation.js';
 import { successAlert } from './alerts.js';
 import { gallery } from './gallery.js';
 import {
@@ -13,8 +15,7 @@ import {
 import { clearImage } from './user-picture.js';
 import {
   clearForm,
-  textDescription,
-  hashTagsField } from './form.js';
+  textDescription } from './form.js';
 import { uploadForm } from './variables.js';
 
 const body = document.querySelector('body');
@@ -22,6 +23,8 @@ const formModal = body.querySelector('.img-upload__overlay');
 const closeElement = uploadForm.querySelector('.img-upload__cancel');
 const pictureField = uploadForm.querySelector('#upload-file');
 const pictureCloseBtn = pictureOverlay.querySelector('.big-picture__cancel');
+const pictureWrapper = formModal.querySelector('.img-upload__wrapper');
+const bigPictureWrapper = document.querySelector('.big-picture__preview');
 
 /* General options */
 
@@ -58,6 +61,15 @@ function openFormModal () {
 
   formModal.classList.remove('hidden');
   changeGenerals();
+
+  formModal.addEventListener('click', (g) => {
+
+    const withinBoundaries = g.composedPath().includes(pictureWrapper);
+
+    if (!withinBoundaries) {
+      closeFormModal();
+    }
+  });
 }
 
 function closeFormModal () {
@@ -78,6 +90,15 @@ function openBigPicture (evt) {
     renderPicture(evt);
     changeGenerals();
   }
+
+  pictureOverlay.addEventListener('click', (g) => {
+
+    const withinBoundaries = g.composedPath().includes(bigPictureWrapper);
+
+    if (!withinBoundaries) {
+      closeBigPicture();
+    }
+  });
 }
 
 function closeBigPicture () {
@@ -118,5 +139,7 @@ export {
   onPopupEscKeydown,
   changeGenerals,
   defaultGenerals,
-  body
+  openFormModal,
+  body,
+  pictureWrapper
 };
