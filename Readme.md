@@ -6,7 +6,7 @@ Clone of Instagram gallery. Study project as part of education at [HTML Academy]
 
 - Technology: JavaScript
 - Gallery rendering (images, comments, likes)
-- Gallery sorting by most popular, most commented, random 10
+- Gallery sorting by default, most commented, random 10
 - Adding and previewing a new user image
 - Applying image filters
 - Adding and verification comment to the new user image
